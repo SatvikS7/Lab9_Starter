@@ -6,6 +6,14 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lab 9</title>
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+  <script>
+    window.TrackJS && TrackJS.install({ 
+      token: "e0ff7fd9997a4806acbf80597ecb35da"
+      // for more configuration options, see https://docs.trackjs.com
+    });
+  </script>
+                        
 
   <style>
     button {
@@ -50,7 +58,7 @@
 </head>
 
 <body>
-  <main>
+<!--  <main> -->
     <form>
       <fieldset>
         <legend>Error Calculator</legend>
@@ -69,23 +77,23 @@
     </form>
 
     <section id="error-btns">
-      <button>Console Log</button>
-      <button>Console Error</button>
-      <button>Console Count</button>
-      <button>Console Warn</button>
-      <button>Console Assert</button>
-      <button>Console Clear</button>
-      <button>Console Dir</button>
-      <button>Console dirxml</button>
-      <button>Console Group Start</button>
-      <button>Console Group End</button>
-      <button>Console Table</button>
-      <button>Start Timer</button>
-      <button>End Timer</button>
-      <button>Console Trace</button>
-      <button>Trigger a Global Error</button>
+      <button id="console_log_btn">Console Log</button>
+      <button id="console_err_btn">Console Error</button>
+      <button id="console_cnt_btn">Console Count</button>
+      <button id="console_warn_btn">Console Warn</button>
+      <button id="console_asrt_btn">Console Assert</button>
+      <button id="console_clr_btn">Console Clear</button>
+      <button id="console_dir_btn">Console Dir</button>
+      <button id="console_dirxml_btn">Console dirxml</button>
+      <button id="console_gStart_btn">Console Group Start</button>
+      <button id="console_gEnd_btn">Console Group End</button>
+      <button id="console_tbl_btn">Console Table</button>
+      <button id="console_sTimer_btn">Start Timer</button>
+      <button id="console_eTimer_btn">End Timer</button>
+      <button id="console_trc_btn">Console Trace</button>
+      <button id="console_ge_btn">Trigger a Global Error</button>
     </section>
-  </main>
+ <!-- </main> -->
 
   <script>
     let form = document.querySelector('form');
@@ -102,6 +110,97 @@
 
     // Start your code here
     // You may move this JS to another file if you wish
+    document.querySelector('#console_log_btn').addEventListener("click", function() {
+      console.log("hello");
+    });
+
+    document.querySelector('#console_err_btn').addEventListener("click", function() {
+      console.error("error found");
+    });
+
+    document.querySelector('#console_cnt_btn').addEventListener("click", function() {
+      console.count();
+    });
+
+    document.querySelector('#console_warn_btn').addEventListener("click", function() {
+      console.warn("do not proceed");
+    });
+
+    document.querySelector('#console_asrt_btn').addEventListener("click", function() {
+      console.assert(false, "this is true");
+    });
+
+    document.querySelector('#console_clr_btn').addEventListener("click", function() {
+      console.clear();
+    });
+
+    document.querySelector('#console_dir_btn').addEventListener("click", function() {
+      console.dir(document.body);
+    });
+
+    document.querySelector('#console_dirxml_btn').addEventListener("click", function() {
+      console.dirxml(document.body);
+    });
+
+    document.querySelector('#console_gStart_btn').addEventListener("click", function() {
+      console.group();
+    });
+
+    document.querySelector('#console_gEnd_btn').addEventListener("click", function() {
+      console.groupEnd();
+    });
+
+    document.querySelector('#console_tbl_btn').addEventListener("click", function() {
+      console.table(["apples", "oranges", "bananas"]);
+    });
+
+    document.querySelector('#console_sTimer_btn').addEventListener("click", function() {
+      console.time("timer");
+    });
+
+    document.querySelector('#console_eTimer_btn').addEventListener("click", function() {
+      console.timeEnd("timer");
+    });
+
+    document.querySelector('#console_trc_btn').addEventListener("click", function() {
+      function deep() {
+        return deeper();
+      }
+      function deeper() {
+        return deepest();
+      }
+      function deepest() {
+        console.trace();
+        return "yo";
+      }
+      deep();
+    });
+
+    window.onerror = function(event, source, lineno, colno, error) {
+      console.log("Global Error:" + event);
+      console.log("Source: " + source);
+    };
+
+    document.querySelector('#console_ge_btn').addEventListener("click", function() {
+      return fake;
+    });
+
+    class funcError extends Error {
+      constructor(message) {
+        super(message);
+        this.name = "Function Error"
+      }
+    }
+
+    try {
+      fakeFunction();
+    } catch (error) {
+      throw new funcError("function not found")
+    } finally {
+      alert("try catch finished")
+    }
+
+    
   </script>
 </body>
 
